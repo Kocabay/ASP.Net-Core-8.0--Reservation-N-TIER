@@ -26,7 +26,7 @@ builder.Services.AddMvc(config =>
 });
 
 
-builder.Services.AddMvc();  
+builder.Services.AddMvc();
 
 
 
@@ -53,5 +53,13 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "areas",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+        );
+});
 
 app.Run();

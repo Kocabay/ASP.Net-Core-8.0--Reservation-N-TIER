@@ -10,13 +10,13 @@ namespace TraversalCoreProje.Controllers
     public class LoginController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
 
-        public LoginController(UserManager<AppUser> userManager)
+        public LoginController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
-
-
 
         [HttpGet]
         public IActionResult SignUp()
@@ -26,7 +26,7 @@ namespace TraversalCoreProje.Controllers
 
 
         [HttpPost]
-        public async Task< IActionResult> SignUp(UserRegisterModel p)
+        public async Task<IActionResult> SignUp(UserRegisterModel p)
         {
             AppUser appUser = new AppUser()
             {
@@ -36,9 +36,9 @@ namespace TraversalCoreProje.Controllers
                 UserName = p.Username,
 
             };
-            if (p.Password==p.ConfirmPassword)
+            if (p.Password == p.ConfirmPassword)
             {
-                var result = await _userManager.CreateAsync(appUser,p.Password);
+                var result = await _userManager.CreateAsync(appUser, p.Password);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("SıgnIn");
@@ -60,5 +60,26 @@ namespace TraversalCoreProje.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> SıgnIn(UserSigInViewModel p)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(p.username, p.password, false, true);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Profile", new { area = "Member" });
+
+                }
+                else
+                {
+                    return RedirectToAction("SıgnIn", "Login");
+                }
+            }
+            return View();
+        }
     }
 }
+
+
