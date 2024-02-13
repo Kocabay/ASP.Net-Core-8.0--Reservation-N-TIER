@@ -8,6 +8,11 @@ using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using TraversalCoreProje.Models;
+using BusinessLayer.Abstract;
+using BusinessLayer.Concrete;
+using DataAccessLayer.Abstract;
+using DataAccessLayer.EntityFramework;
+using BusinessLayer.Container;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +21,8 @@ builder.Services.AddDbContext<Context>();
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>().AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<Context>();
 builder.Services.AddControllersWithViews();
 
+
+builder.Services.ContainerDependencies();
 
 builder.Services.AddMvc(config =>
 {
