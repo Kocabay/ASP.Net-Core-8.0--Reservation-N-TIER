@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 namespace DataAccessLayer.Abstract
 {
     public interface IGuideDal :IGenericDal<Guide>
-    { 
+    {
+        void ChangeToTrueByGuide(int id);
+        void ChangeToFalseByGuide(int id);
+
+
     }
 }

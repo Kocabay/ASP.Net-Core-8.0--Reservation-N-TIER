@@ -1,7 +1,9 @@
 ﻿using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
+using BusinessLayer.ValidationRules;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
+using DTOLayer.DTOs.AnouncementDTOs;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -28,17 +30,17 @@ namespace BusinessLayer.Container
             services.AddScoped<IReservationService, ReservationManager>();
             services.AddScoped<IReservationDal, EfReservationDal>();
 
-            //services.AddScoped<IGuideService, GuideManager>();
-            //services.AddScoped<IGuideDal, EfGuideDal>();
+            services.AddScoped<IGuideService, GuideManager>();
+            services.AddScoped<IGuideDal, EfGuideDal>();
 
-            //services.AddScoped<IExcelService, ExcelManager>();
-            //services.AddScoped<IPdfService, PdfManager>();
+            services.AddScoped<IExcelService, ExcelManager>();
+            services.AddScoped<IPdfService, PdfManager>();
 
-            //services.AddScoped<IContactUsService, ContactUsManager>();
-            //services.AddScoped<IContactUsDal, EfContactUsDal>();
+            services.AddScoped<IContactUsService, ContactUsManager>();
+            services.AddScoped<IContactUsDal, EfContactUsDal>();
 
-            //services.AddScoped<IAnnouncementService, AnnouncementManager>();
-            //services.AddScoped<IAnnouncementDal, EfAnnouncementDal>();
+            services.AddScoped<IAnnouncementService, AnnouncementManager>();
+            services.AddScoped<IAnnouncementDal, EfAnnouncementDal>();
 
             //services.AddScoped<IAccountService, AccountManager>();
             //services.AddScoped<IAccountDal, EfAccountDal>();
@@ -46,9 +48,9 @@ namespace BusinessLayer.Container
             //services.AddScoped<IUowDal, UowDal>();
         }
 
-        //public static void CustomerValidator(this IServiceCollection services)
-        //{
-        //    services.AddTransient<IValidator<AnnouncementAddDto>, AnnouncementValidator>();
-        //}
+        public static void CustomerValidator(this IServiceCollection services)
+        {
+            services.AddTransient<IValidator<AnouncementAddDTOs>, AnnouncementValidator>();
+        }
     }
 }

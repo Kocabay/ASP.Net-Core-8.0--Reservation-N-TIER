@@ -1,22 +1,25 @@
+using BusinessLayer.Container;
 using DataAccessLayer.Concrete;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
 using EntityLayer.Concrete;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using TraversalCoreProje.Models;
-using BusinessLayer.Abstract;
-using BusinessLayer.Concrete;
-using DataAccessLayer.Abstract;
-using DataAccessLayer.EntityFramework;
-using BusinessLayer.Container;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+
+builder.Services.AddLogging(x =>
+{
+    x.ClearProviders();
+    x.SetMinimumLevel(LogLevel.Debug);
+    x.AddDebug();
+});
+
+
+
 builder.Services.AddDbContext<Context>();
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>().AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<Context>();
 builder.Services.AddControllersWithViews();
@@ -32,16 +35,19 @@ builder.Services.AddMvc(config =>
     config.Filters.Add(new AuthorizeFilter(policy));
 });
 
+builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.CustomerValidator();
+ 
+
+builder.Services.AddControllersWithViews().AddFluentValidation();
+
 
 builder.Services.AddMvc();
-
-
-
-
-
-
+ILoggerFactory loggerFactory = new LoggerFactory();
 var app = builder.Build();
-
+var path = Directory.GetCurrentDirectory();
+loggerFactory.AddFile($"{path}\\Logs\\Log1.txt");
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -49,7 +55,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-app.UseStatusCodePagesWithReExecute("/ErrorPage/Error404/", "?code={}0");
+app.UseStatusCodePagesWithReExecute("/ErrorPage/Error404/", "?code={0}");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
