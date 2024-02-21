@@ -17,9 +17,6 @@ namespace BusinessLayer.Concrete
         {
             _commentDal = commentDal;
         }
-
-
-
         public void TAdd(Comment t)
         {
             _commentDal.Insert(t);
@@ -52,6 +49,11 @@ namespace BusinessLayer.Concrete
         public List<Comment> GetListCommentWithDestination()
         {
              return _commentDal.GetListCommentWithDestination();
+        }
+
+        public List<Comment> TGetListCommentWithDestinationAndUser(int id)
+        {
+            return _commentDal.GetListCommentWithDestinationAndUser(id);
         }
     }
 }
