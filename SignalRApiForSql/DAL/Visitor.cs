@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SignalRApi.DAL
+namespace SignalRApiForSql.DAL
 {
     public enum ECity
     {

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SignalRApi.DAL
+namespace SignalRApiForSql.DAL
 {
     public class Context : DbContext
     {
-        public Context(DbContextOptions<Context> options):base(options)
+        public Context(DbContextOptions<Context> options) : base(options)
         {
 
         }
