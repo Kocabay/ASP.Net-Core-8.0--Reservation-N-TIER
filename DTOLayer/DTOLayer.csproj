@@ -47,12 +47,12 @@
     <Compile Include="DTOs\AppUserDTOs\AppUserLoginDTOs.cs" />
     <Compile Include="DTOs\AppUserDTOs\AppUserRegisterDTOs.cs" />
     <Compile Include="DTOs\CityDTOs\CityAddDTO.cs" />
+    <Compile Include="DTOs\ContactDTOs\SendMessageDto.cs" />
     <Compile Include="DTOs\DestinationDTOs\DestinationAddDTOs.cs" />
     <Compile Include="DTOs\MailDTOs\MailRequestDTOs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DTOs\ContactDTOs\" />
     <Folder Include="DTOs\NewFolder1\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
