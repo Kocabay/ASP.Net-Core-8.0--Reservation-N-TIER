@@ -49,6 +49,11 @@ builder.Services.AddMvc(config =>
     config.Filters.Add(new AuthorizeFilter(policy));
 });
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Login/SýgnIn";
+});
+
 builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.CustomerValidator();
@@ -69,7 +74,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-app.UseStatusCodePagesWithReExecute("/ErrorPage/Error404/", "?code={0}");
+app.UseStatusCodePagesWithReExecute("/ErrorPage/Error404/", "?code={0}");   ////ERROR SAYFASI ÝÇÝN YAZILAN SERVÝS.
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -84,12 +89,12 @@ app.MapControllerRoute(
 
 
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-        name: "areas",
-        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-        );
-});
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapControllerRoute(
+//        name: "areas",
+//        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+//        );
+//});
 
 app.Run();
